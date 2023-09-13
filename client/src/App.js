@@ -7,14 +7,20 @@ function App() {
 
   useEffect(() => {
     async function readServerData() {
-      const resp = await fetch('/api/hello');
-      const data = await resp.json();
-
-      console.log('Data from server:', data);
-
-      setServerData(data.message);
+   //add todo function v
+    const req = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date:'today', workoutTitle:'title', workoutNotes:'notes' }),
+    };
+    try {
+      const res = await fetch('/api/workouts', req);
+      if (!res.ok) throw new Error(`fetch Error ${res.status}`);
+      const data = await res.json();
+      console.log(data)
+    } catch (e) {
     }
-
+    }
     readServerData();
   }, []);
 
